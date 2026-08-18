@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Roadmap · Inglés desde cero</title>
+<meta name="description" content="Currículo de inglés A1 a B1, organizado por niveles y unidades.">
+<meta name="theme-color" content="#0d0e12">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600">
+<style>
+  :root{
+    --bg:#0d0e12;
+    --surface:#16181f;
+    --surface-2:#1f2022;
+    --border:#38393f;
+    --text:#eceef3;
+    --text-muted:#8f93a0;
+    --text-faint:#565a68;
+    --accent:#26289c;
+    --a1:#6ee7b7;
+    --a2:#7dd3fc;
+    --b1:#ffb454;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Nunito',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    padding-bottom:60px;
+  }
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:32px 20px 20px;
+  }
+  header.top{
+    margin-bottom:28px;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:'Quicksand',sans-serif;
+    font-weight:700;
+    font-size:clamp(28px,7vw,38px);
+    line-height:1.1;
+    margin:0 0 8px;
+    letter-spacing:-.02em;
+  }
+  h1 span{
+    background:linear-gradient(90deg,var(--a1),var(--a2) 50%,var(--b1));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  p.sub{
+    color:var(--text-muted);
+    font-size:15px;
+    line-height:1.5;
+    margin:0;
+    max-width:52ch;
+  }
+
+  /* Gauge */
+  .gauge-block{
+    margin-top:24px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:18px 18px 16px;
+  }
+  .gauge-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:12px;
+  }
+  .gauge-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+  }
+  .gauge-count{
+    font-family:'quicksand',sans-serif;
+    font-size:14px;
+    font-weight:600;
+    color:var(--text);
+  }
+  .gauge-track{
+    display:flex;
+    gap:3px;
+  }
+  .gauge-seg{
+    height:7px;
+    flex:1;
+    border-radius:3px;
+    background:var(--surface-2);
+    transition:background .25s ease;
+  }
+  .gauge-seg.done{ }
+  .gauge-legend{
+    display:flex;
+    gap:16px;
+    margin-top:12px;
+  }
+  .gauge-legend span{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    color:var(--text-muted);
+    font-family:'JetBrains Mono',monospace;
+  }
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+  /* Levels */
+  .levels{margin-top:28px;}
+  .level{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    margin-bottom:14px;
+    overflow:hidden;
+    background:var(--surface);
+  }
+  .level-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 18px;
+    cursor:poNunito;
+    user-select:none;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .level-head:active{background:var(--surface-2);}
+  .level-id{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .level-tag{
+    font-family:'quicksand',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    padding:5px 10px;
+    border-radius:7px;
+    letter-spacing:.02em;
+  }
+  .level-name{
+    font-size:13px;
+    color:var(--text-muted);
+  }
+  .level-right{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .level-progress{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--text-faint);
+  }
+  .chevron{
+    width:18px;height:18px;
+    transition:transform .25s ease;
+    color:var(--text-muted);
+    flex-shrink:0;
+  }
+  .level.open .chevron{transform:rotate(180deg);}
+
+  .units{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .level.open .units{ }
+
+  .unit{
+    border-top:1px solid var(--border);
+    padding:16px 18px 18px;
+  }
+  .unit-head{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:poNunito;
+  }
+  .unit-check{
+    margin-top:2px;
+    width:19px;height:19px;
+    border-radius:6px;
+    border:1.5px solid var(--text-faint);
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.2s ease;
+  }
+  .unit-check.checked{
+    background:var(--level-accent, var(--accent));
+    border-color:var(--level-accent, var(--accent));border-color: #928484;
+  }
+  .unit-check svg{width:12px;height:12px;opacity:0;transition:opacity .15s;}
+  .unit-check.checked svg{opacity:1;}
+  .unit-title-block{flex:1;min-width:0;}
+  .unit-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--text-faint);
+    letter-spacing:.05em;
+  }
+  .unit-title{
+    font-family:'quicksand',sans-serif;
+    font-size:16px;
+    font-weight:600;
+    margin-top:2px;
+    line-height:1.3;
+  }
+  .unit-title.done{color:var(--text-muted);text-decoration:line-through;text-decoration-color:var(--text-faint);}
+
+  .unit-body{
+    margin-top:12px;
+    padding-left:31px;
+  }
+  .block-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin:0 0 6px;
+  }
+  ul.grammar{
+    list-style:none;
+    margin:0 0 14px;
+    padding:0;
+  }
+  ul.grammar li{
+    font-size:14px;
+    line-height:1.5;
+    color:var(--text);
+    padding-left:14px;
+    position:relative;
+    margin-bottom:5px;
+  }
+  ul.grammar li::before{
+    content:"";
+    position:absolute;
+    left:0;top:9px;
+    width:5px;height:5px;
+    border-radius:50%;
+    background:var(--level-accent, var(--accent));
+  }
+  .vocab-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .vtag{
+    font-size:12.5px;
+    text-transform: capitalize;
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    color:var(--text-muted);
+    padding:4px 9px;
+    border-radius:20px;
+  }
+
+  footer{
+    max-width:720px;
+    margin:36px auto 0;
+    padding:0 20px;
+    color:var(--text-faint);
+    font-size:12px;
+    font-family:'JetBrains Mono',monospace;
+    text-align:center;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>De cero a <span>B1</span></h1>
+  </header>
+
+  <div class="gauge-block">
+    <div class="gauge-head">
+      <span class="gauge-label">Progreso general</span>
+      <span class="gauge-count" id="gaugeCount">0 / 20</span>
+    </div>
+    <div class="gauge-track" id="gaugeTrack"></div>
+    <div class="gauge-legend">
+      <span><i class="dot" style="background:var(--a1)"></i>A1</span>
+      <span><i class="dot" style="background:var(--a2)"></i>A2</span>
+      <span><i class="dot" style="background:var(--b1)"></i>B1</span>
+    </div>
+  </div>
+
+  <div class="levels" id="levels"></div>
+</div>
+
+
+<script>
+const DATA = [
+  {level:"A1", name:"Fundamentos", color:"var(--a1)", units:[
+    {title:"Fundamentos", grammar:["Alfabeto y pronunciación básica","Pronombres personales (I, you, he, she...)","Verbo \"to be\" (afirmativo, negativo, Nunitorogativo)","Artículos a / an / the"], vocab:["Saludos","Presentaciones","Números 1-100","Países y nacionalidades"]},
+    {title:"Lo cotidiano", grammar:["Verbo \"to have\"","Plural de sustantivos (regulares e irregulares)","Adjetivos posesivos (my, your, his...)","This / that / these / those"], vocab:["familia","objetos del hogar","colores","días de la semana","meses"]},
+    {title:"Presente simple", grammar:["Present Simple (afirmativo, negativo, Nunitorogativo)","Adverbios de frecuencia (always, usually, sometimes, never)","There is / there are"], vocab:["rutinas diarias","profesiones","la hora"]},
+    {title:"Describiendo el entorno", grammar:["Preposiciones de lugar (in, on, under, next to...)","Preposiciones de tiempo (at, in, on)","Can / can't (habilidad y permiso)"], vocab:["la ciudad","direcciones","lugares comunes"]},
+    {title:"Presente continuo", grammar:["Present Continuous","Diferencia Present Simple vs Present Continuous"], vocab:["actividades de ocio","deportes","clima"]},
+  ]},
+  {level:"A2", name:"Consolidando", color:"var(--a2)", units:[
+    {title:"El pasado", grammar:["Past Simple con \"to be\" (was / were)","Past Simple verbos regulares e irregulares","Marcadores de tiempo pasado (yesterday, last week...)"], vocab:["viajes","experiencias pasadas"]},
+    {title:"Comparaciones", grammar:["Comparativos y superlativos","Adjetivos calificativos"], vocab:["descripciones físicas","descripciones de personalidad"]},
+    {title:"El futuro", grammar:["Going to (planes e intenciones)","Will (predicciones, decisiones espontáneas)"], vocab:["metas","planes de vida","tecnología"]},
+    {title:"Cuantificadores y sustantivos", grammar:["Countable / uncountable nouns","Some / any / much / many / a lot of"], vocab:["comida","compras","cantidades"]},
+  ]},
+  {level:"B1", name:"Estructuras avanzadas", color:"var(--b1)", units:[
+    {title:"Presente perfecto", grammar:["Present Perfect (introducción)","Ever / never / just / already / yet"], vocab:["logros","experiencias de vida"]},
+    {title:"Modales y obligación", grammar:["Should / must / have to","Modales de consejo y obligación"], vocab:["salud","trabajo","normas"]},
+    {title:"Presente perfecto continuo", grammar:["Present Perfect Continuous (how long...? for / since)","Diferencia Present Perfect vs Present Perfect Continuous"], vocab:["trabajo","estudios","hobbies de largo plazo"]},
+    {title:"Pasado continuo y pasado perfecto", grammar:["Past Continuous","Past Continuous vs Past Simple (while / when)","Past Perfect (introducción)"], vocab:["narrar historias","anécdotas","noticias"]},
+    {title:"Voz pasiva", grammar:["Passive Voice (presente y pasado)"], vocab:["procesos","fábricas","noticias","ciencia"]},
+    {title:"Condicionales", grammar:["First Conditional (situaciones reales / probables)","Second Conditional (situaciones hipotéticas)"], vocab:["decisiones","situaciones imaginarias"]},
+    {title:"Reported Speech", grammar:["Estilo indirecto (afirmaciones)","Verbos introductorios (say, tell, ask)"], vocab:["chismes","conversaciones","reportar información"]},
+    {title:"Modales avanzados", grammar:["Might / may / could (posibilidad)","Modales en pasado (should have, could have)"], vocab:["arrepentimientos","especulación","consejos"]},
+    {title:"Verbos y estructuras avanzadas", grammar:["Gerundios vs infinitivos (verb + -ing / to + verb)","Phrasal verbs comunes (get up, look for, turn off...)"], vocab:["rutinas laborales","tecnología","redes sociales"]},
+    {title:"Cláusulas relativas", grammar:["Relative clauses (who, which, that, where)","Conectores avanzados (despite, in spite of, even though)"], vocab:["cultura","tradiciones","sociedad"]},
+    {title:"Consolidación B1", grammar:["Repaso integral de tiempos verbales","Question tags"], vocab:["viajes Nunitonacionales","entrevistas de trabajo","opiniones formales"]},
+  ]},
+];
+
+const STORAGE_KEY = "english-roadmap-progress";
+let progress = {};
+try{ progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }catch(e){ progress = {}; }
+
+function saveProgress(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+}
+
+function unitId(levelIdx, unitIdx){ return levelIdx+"-"+unitIdx; }
+
+function totalUnits(){
+  return DATA.reduce((sum,l)=>sum+l.units.length,0);
+}
+function doneCount(){
+  return Object.values(progress).filter(Boolean).length;
+}
+
+function render(){
+  const levelsEl = document.getElementById("levels");
+  levelsEl.innerHTML = "";
+
+  DATA.forEach((lvl, li)=>{
+    const levelDiv = document.createElement("div");
+    levelDiv.className = "level";
+    levelDiv.style.setProperty('--level-accent', lvl.color);
+
+    const doneInLevel = lvl.units.filter((_,ui)=>progress[unitId(li,ui)]).length;
+
+    const head = document.createElement("div");
+    head.className = "level-head";
+    head.innerHTML = `
+      <div class="level-id">
+        <span class="level-tag" style="background:color-mix(in srgb, ${lvl.color} 18%, transparent); color:${lvl.color}">${lvl.level}</span>
+        <span class="level-name">${lvl.name}</span>
+      </div>
+      <div class="level-right">
+        <span class="level-progress">${doneInLevel}/${lvl.units.length}</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+    `;
+    head.addEventListener("click", ()=>{
+      levelDiv.classList.toggle("open");
+      const unitsEl = levelDiv.querySelector(".units");
+      if(levelDiv.classList.contains("open")){
+        unitsEl.style.maxHeight = unitsEl.scrollHeight + "px";
+      } else {
+        unitsEl.style.maxHeight = "0px";
+      }
+    });
+
+    const unitsWrap = document.createElement("div");
+    unitsWrap.className = "units";
+
+    lvl.units.forEach((u, ui)=>{
+      const id = unitId(li, ui);
+      const isDone = !!progress[id];
+
+      const unitDiv = document.createElement("div");
+      unitDiv.className = "unit";
+
+      const uh = document.createElement("div");
+      uh.className = "unit-head";
+      uh.innerHTML = `
+        <div class="unit-check ${isDone ? "checked" : ""}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="unit-title-block">
+          <div class="unit-num">UNIDAD ${li===0? ui+1 : li===1? ui+6 : ui+10}</div>
+          <div class="unit-title ${isDone ? "done" : ""}">${u.title}</div>
+        </div>
+      `;
+      uh.querySelector(".unit-check").addEventListener("click", (e)=>{
+        e.stopPropagation();
+        progress[id] = !progress[id];
+        saveProgress();
+        render();
+        // keep level open and re-expand
+        const reopened = document.querySelectorAll(".level")[li];
+        reopened.classList.add("open");
+        const uEl = reopened.querySelector(".units");
+        uEl.style.maxHeight = uEl.scrollHeight + "px";
+      });
+
+      const body = document.createElement("div");
+      body.className = "unit-body";
+      body.innerHTML = `
+        <p class="block-label">Gramática</p>
+        <ul class="grammar">${u.grammar.map(g=>`<li>${g}</li>`).join("")}</ul>
+        <p class="block-label">Vocabulario</p>
+        <div class="vocab-tags">${u.vocab.map(v=>`<span class="vtag">${v}</span>`).join("")}</div>
+      `;
+
+      unitDiv.appendChild(uh);
+      unitDiv.appendChild(body);
+      unitsWrap.appendChild(unitDiv);
+    });
+
+    levelDiv.appendChild(head);
+    levelDiv.appendChild(unitsWrap);
+    levelsEl.appendChild(levelDiv);
+  });
+
+  renderGauge();
+}
+
+function renderGauge(){
+  const track = document.getElementById("gaugeTrack");
+  track.innerHTML = "";
+  let flatIndex = 0;
+  DATA.forEach((lvl)=>{
+    lvl.units.forEach((_,ui)=>{
+      const id = unitId(DATA.indexOf(lvl), ui);
+      const seg = document.createElement("div");
+      seg.className = "gauge-seg" + (progress[id] ? " done" : "");
+      if(progress[id]) seg.style.background = lvl.color;
+      track.appendChild(seg);
+      flatIndex++;
+    });
+  });
+  document.getElementById("gaugeCount").textContent = `${doneCount()} / ${totalUnits()}`;
+}
+
+render();
+
+// Open the first level by default (script runs after DOM is already parsed)
+const firstLevel = document.querySelector(".level");
+if(firstLevel){
+  firstLevel.classList.add("open");
+  const u = firstLevel.querySelector(".units");
+  u.style.maxHeight = u.scrollHeight + "px";
+}
+
+// register service worker if present (for installability)
+if("serviceWorker" in navigator){
+  window.addEventListener("load", ()=>{
+    navigator.serviceWorker.register("sw.js").catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
